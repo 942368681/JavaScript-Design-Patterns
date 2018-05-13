@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 父类
+        function SuperClass (name) {
+            this.name = name;
+            this.color = ['red', 'black', 'blue'];
+        };
+        SuperClass.prototype.showName = function () {
+            console.log(this.name);
+        };
+
+        // 子类
+        function SubClass (name, time) {
+            SuperClass.call(this, 'child');
+            this.time = time;
+        };
+        SubClass.prototype = new SuperClass();
+        SubClass.prototype.showTime = function () {
+            console.log(this.time);
+        };
+
+        /* 
+            并不完美：
+                构造函数继承和类式继承分别执行了一次父类的构造函数，并不完美
+
+            解决：
+                原型式继承
+        */
+    </script>
+</body>
+</html>

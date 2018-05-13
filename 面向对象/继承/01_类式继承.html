@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            原理：
+                将父类实例赋值给子类原型
+                当实例化一个父类的时候，新创建的实例化对象复制了父类的构造函数内的属性与方法，并且将_proto_指向了父类的原型对象。
+                所以子类的原型可以访问到父类原型上的属性和方法，同时也可以访问到父类构造函数复制来的属性和方法。
+        */
+        
+        function SuperClass () {
+            this.superValue = true;
+        };
+        SuperClass.prototype.getSuperValue = function () {
+            return this.superValue;
+        };
+        
+        function SubClass () {
+            this.subValue = false;
+        };
+        SubClass.prototype = new SuperClass();
+
+        var sub = new SubClass();
+        console.log(sub.superValue);
+
+        /* 
+            通过 instanceof 判断对象是否为某个类的实例（继承自某个类）
+        */
+        console.log(sub instanceof SubClass);   // true
+        console.log(sub instanceof SuperClass);   // true
+        console.log(SubClass.prototype instanceof SuperClass);  // true
+
+        /* 
+            类式继承缺点：
+                1.一个子类更改由父类构造函数继承来的公有属性时，其他子类都会受到影响
+                2.由于类式继承是依靠子类原型对父类的实例化实现的，所以创建子类时无法初始化父类构造函数下的属性
+
+            解决这两类问题：
+                运用构造函数继承
+        */
+
+    </script>
+</body>
+</html>

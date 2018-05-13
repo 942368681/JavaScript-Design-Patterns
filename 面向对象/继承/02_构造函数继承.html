@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            原理：
+                在子类构造函数中执行一遍父类的构造函数，并且更改this指向，换个说法就是，将子类的变量在父类中执行一遍。
+        */
+        function SuperClass (id) {
+            this.id = id;
+            this.type = 'code';
+            this.color = ['red', 'black', 'blue'];
+        };
+        SuperClass.prototype.showType = function () {
+            console.log(this.type);
+        };
+
+        function SubClass (id) {
+            SuperClass.call(this, id);
+        };
+        var sub1 = new SubClass(1);
+        var sub2 = new SubClass(2);
+        
+        sub1.color.push('pink');
+
+        console.log(sub1.color);
+        console.log(sub2.color);
+        console.log(sub1.id);
+        console.log(sub2.id);
+        console.log(sub1.showType());   // 报错
+
+        /* 
+            缺点：
+                没有涉及到prototype，所以继承不到父类的方法，若想继承则需要将父类的方法挂载构造函数下，这样方法就是单独的而无法共用。
+
+            解决：
+                综合构造函数继承和类式继承的优点————组合继承
+        */
+    </script>
+</body>
+</html>
