@@ -19,20 +19,31 @@
 
         // 子类
         function SubClass (name, time) {
-            SuperClass.call(this, 'child');
+            SuperClass.call(this, name);
             this.time = time;
         };
         SubClass.prototype = new SuperClass();
         SubClass.prototype.showTime = function () {
             console.log(this.time);
         };
+        
+        var sub1 = new SubClass('child', 111);
+        sub1.color.push('pink');
 
+        console.log(sub1.name);
+        console.log(sub1.color);
+        console.log(sub1.time);
+        console.log(sub1 instanceof SubClass);
+        console.log(sub1 instanceof SuperClass);
+        console.log(sub1.constructor == SubClass);
+        
         /* 
             并不完美：
-                构造函数继承和类式继承分别执行了一次父类的构造函数，并不完美
+                构造函数继承和类式继承分别执行了一次父类的构造函数，并不完美，方法的继承实际上只需得到一份父类原型的副本就可以了
+                子类并不是父类的实例（类式继承引起的）
 
             解决：
-                原型式继承
+                寄生组合式继承
         */
     </script>
 </body>

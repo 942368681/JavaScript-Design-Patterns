@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            原理：
+                寄生式组合继承 = 构造函数继承 + 原型继承
+            原型继承：
+                不可以直接将父类构造函数原型赋值给子类构造函数原型，否则子类修改其原型下由父类继承而来的方法会影响父类，解决办法其实就是引入一个过渡构造函数，将父类构造函数原型赋值给此构造函数的原型，再将此构造函数的实例化对象赋值给子类构造函数的原型，注意这里要更改constructor指向问题，这样，通过_proto_，子类可以继承到父类的prototype下的所有方法，并且由于过渡构造函数的原型对象和过渡构造函数的实例化对象是两个不同的指针，所以改写子类构造函数prototype下的方法并不会影响到父类。
+        */
+        function inheritObj (o) {
+            function F () {};
+            F.prototype = o;
+            return new F();
+        };
+
+        function inheritPrototype (subClass, superClass) {
+            var p = inheritObj(superClass.prototype);
+            p.constructor = subClass;
+            subClass.prototype = p;
+        };
+
+        function SuperClass (name) {
+            this.name = name;
+            this.color = ['red', 'blue', 'yellow'];
+        };
+        SuperClass.prototype.getName = function () {
+            return this.name;
+        };
+
+        function SubClass (name, time) {
+            SuperClass.call(this, name);
+            this.time = time;
+        };
+        inheritPrototype(SubClass, SuperClass);
+        SubClass.prototype.getTime = function () {
+            return this.time;
+        };
+        
+        var sup1 = new SuperClass('father');
+        var sub1 = new SubClass('child', 1111);
+        sup1.color.push('black');
+        sub1.color.push('pink');
+
+        console.log(sup1.name);
+        console.log(sup1.color);
+        console.log(sup1.getName());
+        
+        console.log(sub1.name);
+        console.log(sub1.color);
+        console.log(sub1.time);
+        console.log(sub1.getName());
+        console.log(sub1.getTime());
+    </script>
+</body>
+</html>

@@ -31,7 +31,7 @@
         console.log(sub.superValue);
 
         /* 
-            通过 instanceof 判断对象是否为某个类的实例（继承自某个类）
+            通过 instanceof 来检测后者（构造函数）的原型是否存在与前者（对象）的原型链上
         */
         console.log(sub instanceof SubClass);   // true
         console.log(sub instanceof SuperClass);   // true
