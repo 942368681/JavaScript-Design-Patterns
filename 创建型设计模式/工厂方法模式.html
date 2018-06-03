@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 安全模式工厂类
+    var Factory = function (type, content) {
+        if (this instanceof Factory) {
+            var s = new this[type](content);
+            return s;
+        } else {
+            return new Factory(type, content);
+        }
+    };
+    // 工厂类的原型中设置创建所有类型数据对象的基类
+    Factory.prototype = {
+        Java: function (content) {
+            this.content = content;
+            (function () {
+                var div = document.createElement('div');
+                div.innerHTML = content;
+                div.style.border = '1px solid red';
+                document.documentElement.appendChild(div);
+            })();
+        },
+        JavaScript: function (content) {
+            this.content = content;
+            (function () {
+                var div = document.createElement('div');
+                div.innerHTML = content;
+                div.style.border = '1px solid yellow';
+                document.documentElement.appendChild(div);
+            })();
+        },
+        php: function (content) {
+            this.content = content;
+            (function () {
+                var div = document.createElement('div');
+                div.innerHTML = content;
+                div.style.border = '1px solid blue';
+                document.documentElement.appendChild(div);
+            })();
+        },
+        UI: function (content) {
+            this.content = content;
+            (function () {
+                var div = document.createElement('div');
+                div.innerHTML = content;
+                div.style.border = '1px solid pink';
+                document.documentElement.appendChild(div);
+            })();
+        }
+    };
+
+    var data = [
+        {type: "Java", content: "Java 哪家强"},
+        {type: "JavaScript", content: "JavaScript 哪家强"},
+        {type: "php", content: "php 哪家强"},
+        {type: "UI", content: "UI 哪家强"}
+    ];
+
+    data.forEach(function (item) {
+        Factory(item.type, item.content);
+    });
+</script>
+</html>

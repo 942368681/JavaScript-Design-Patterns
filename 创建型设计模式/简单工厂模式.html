@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 1
+    var LoginAlert = function () {
+        // ...
+    };
+    var LoginConfirm = function () {
+        // ...
+    };
+    var LoginPrompt = function () {
+        // ...
+    };
+    var PopFactory = function (name) {
+        switch (name) {
+            case 'alert':
+                return new LoginAlert();
+            case 'confirm': 
+                return new LoginConfirm();    
+            case 'prompt':
+                return new LoginPrompt();
+        }
+    };
+
+    // 2
+    var createPop = function (type, text) {
+        var o = new Object();
+        o.content = text;
+        o.show = function () {
+            // 显示方法
+        };
+        if (type == 'alert') {
+            // 警示框差异部分
+        }
+        if (type == 'prompt') {
+            // 提示框差异部分
+        }
+        if (type == 'confirm') {
+            // 确认框差异部分
+        }
+        return o;
+    };
+    var userNameAlert = createPop('alert', '用户名只能是26个字母和数字');
+    console.log(userNameAlert.content);
+</script>
+</html>
