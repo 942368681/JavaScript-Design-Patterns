@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            静态变量：
+                只能访问，不能修改，创建后就能使用
+        */
+
+        // 实现：
+        var Conf = (function () {
+            // 私有变量
+            var conf = {
+                MAX_NUM: 100,
+                MIN_NUM: 0,
+                COUNT: 1000
+            }; 
+            // 返回取值器
+            return {
+                get: function (name) {
+                    return conf[name] ? conf[name] : null;
+                }
+            }
+        })();
+
+        var count = Conf.get('COUNT');
+        console.log(count);
+
+        // 惰性创建
+        var LazySingle = (function () {
+            var _instance = null;
+            // 单例
+            function Single () {
+                return {
+                    MAX_NUM: 100,
+                    MIN_NUM: 0,
+                    COUNT: 1000
+                };
+            };
+            return function () {
+                if (!_instance) {
+                    _instance = Single();
+                }
+                return _instance;
+            }
+        })();
+
+        console.log(LazySingle().COUNT);
+    </script>
+</body>
+</html>

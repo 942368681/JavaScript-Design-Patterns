@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 原型继承方法
+        function inheritPrototype (subClass, superClass) {
+            function F () {};
+            F.prototype = superClass.prototype;
+            var p = new F();
+            p.constructor = subClass;
+            subClass.prototype = p;
+        };
+        
+        // 图片轮播类
+        var LoopImages = function (imgArr, container) {
+            this.imagesArray = imgArr;          // 图片数组
+            this.container = container;         // 容器
+        };
+        LoopImages.prototype = {
+            createImage: function () {},        // 创建轮播图逻辑
+            changeImage: function () {}         // 切换逻辑
+        };
+
+        // 上下滑动切换类
+        var SlideLoopImg = function (imgArr, container) {
+            // 构造函数继承基类
+            LoopImages.call(this, imgArr, container);
+        };
+        // 方法继承
+        inheritPrototype(SlideLoopImg, LoopImages);
+        // 重写继承的切换方法
+        SlideLoopImg.prototype.changeImage = function () {
+            console.log('SlideLoopImg changeImage function');
+        };
+
+        // 渐隐切换类
+        var FadeLoopImg = function (imgArr, container, arrow) {
+            // 构造函数继承基类
+            LoopImages.call(this, imgArr, container);
+            // 切换箭头私有变量
+            this.arrow = arrow;
+        };
+        // 方法继承
+        inheritPrototype(FadeLoopImg, LoopImages);
+        // 重写继承的切换方法
+        FadeLoopImg.prototype.changeImage = function () {
+            console.log('FadeLoopImg changeImage function');
+        };
+
+        // 实例化一个渐隐轮播图
+        var fadeImg = new FadeLoopImg([
+            'a.png',
+            'b.png',
+            'c.png'
+        ], 'slide', [
+            'prev.png',
+            'next.png'
+        ]);
+        fadeImg.changeImage();
+    </script>
+</body>
+</html>
